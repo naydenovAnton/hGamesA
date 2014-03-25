@@ -53,25 +53,13 @@
     }
 
     function gotFileWriter(writer) {
-        alert('2');
-        writer.onwriteend = function(evt) {
-            console.log("contents of file now 'some sample text'");
-            writer.truncate(11);  
-            writer.onwriteend = function(evt) {
-                console.log("contents of file now 'some sample'");
-                writer.seek(4);
-                writer.write(" different text");
-                writer.onwriteend = function(evt){
-                    console.log("contents of file now 'some different text'");
-                }
-            };
-        };
-        writer.write("some sample text");
+        writer.write("color");
         alert('3');
     }
 
     function fail(error) {
         console.log(error.code);
+        aler
     }
 
 </script>
