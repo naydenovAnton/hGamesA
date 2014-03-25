@@ -42,21 +42,18 @@
     //
     document.addEventListener("deviceready", onDeviceReady, false);
 
-    // Cordova is ready
-    //
-    document.addEventListener("deviceready", onDeviceReady, false);
-
     function onDeviceReady() {
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
         window.resolveLocalFileSystemURI("file:///sdcard/readme.txt", gotFileEntry, fail);
     }
 
 
     function gotFileEntry(fileEntry) {
+        alert('1');
         fileEntry.createWriter(gotFileWriter, fail);
     }
 
     function gotFileWriter(writer) {
+        alert('2');
         writer.onwriteend = function(evt) {
             console.log("contents of file now 'some sample text'");
             writer.truncate(11);  
@@ -70,6 +67,7 @@
             };
         };
         writer.write("some sample text");
+        alert('3');
     }
 
     function fail(error) {
