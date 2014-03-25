@@ -22,8 +22,27 @@
     <!-- /header -->
     <div role="main" class="ui-content jqm-content jqm-fullwidth">
         <p>
-			123
+            <label>Текст на начална страница<label>
+            <input id="home-text" value="">
+        </p>
+        <p>
+			<label><input class="removes" type="checkbox" name="color" />To sell a color</label>
+            <label><input class="removes" type="checkbox" name="color-clips" />The office supplier</label>
+            <label><input class="removes" type="checkbox" name="hotel" />Dream Vacation</label>
+            <label><input class="removes" type="checkbox" name="parceli" />The building plots</label>
+            <label><input class="removes" type="checkbox" name="test-attitudes" />Test attitudes</label>
+            <label><input class="removes" type="checkbox" name="wedding" />The wedding</label>
+            <label><input class="removes" type="checkbox" name="appartament" />The apartment</label>
+            <label><input class="removes" type="checkbox" name="houses" />Houses</label>
+            <label><input class="removes" type="checkbox" name="emails" />Emails</label>
+            <label><input class="removes" type="checkbox" name="chairs" />Chairs</label>
+            <label><input class="removes" type="checkbox" name="business-trip" />Business trip</label>
+            <label><input class="removes" type="checkbox" name="people-choise" />People Choice</label>
+            <label><input class="removes" type="checkbox" name="carpenter" />Girl and Carpenter</label>
 		</p>
+        <p>
+            <button id="addText">Запиши</button>
+        </p>
     </div>
     <!-- /content -->
     <div data-role="footer" data-position="fixed" data-theme="b" data-tap-toggle="false">
@@ -43,18 +62,32 @@
     document.addEventListener("deviceready", onDeviceReady, false);
 
     function onDeviceReady() {
-        window.resolveLocalFileSystemURI("file:///sdcard/readme.txt", gotFileEntry, fail);
+
+        $('#addText').unbind('click').click(function(){
+            window.resolveLocalFileSystemURI("file:///sdcard/readme.txt", gotFileEntry, fail);   
+        })
+
+        
     }
 
 
     function gotFileEntry(fileEntry) {
-        alert('1');
         fileEntry.createWriter(gotFileWriter, fail);
     }
 
     function gotFileWriter(writer) {
-        writer.write("color");
-        alert('3');
+
+        var text = $('#home-text').val();
+
+        $('.removes').each(function(){
+            if ($(this).is(":checked")) {
+                text += '::' + $(this).attr('name'); 
+            }
+
+        });
+
+        writer.write(text);
+        alert(text);
     }
 
     function fail(error) {
