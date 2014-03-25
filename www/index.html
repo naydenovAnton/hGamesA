@@ -38,42 +38,44 @@
 <script src="js/jquery.countdown.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     
+    // Wait for Cordova to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova is ready
+    //
     document.addEventListener("deviceready", onDeviceReady, false);
 
     function onDeviceReady() {
-	alert('ready')
-        //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
-        //window.resolveLocalFileSystemURI("file:///sdcard/readme.txt", onResolveSuccess, fail);
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+        window.resolveLocalFileSystemURI("file:///sdcard/readme.txt", gotFileEntry, fail);
     }
 
-    function onFileSystemSuccess(fileSystem) {
+
+    function gotFileEntry(fileEntry) {
+        fileEntry.createWriter(gotFileWriter, fail);
     }
 
-    function onResolveSuccess(fileEntry) {
-        //fileEntry.file(gotFile, fail);
-    }
-
-    function gotFile(file){
-        //readAsText(file);
-    }
-
-    function readAsText(file) {
-        var reader = new FileReader();
-        reader.onloadend = function(evt) {
-            var str = evt.target.result;
-            var res = str.split("::");
-
-            $.each(res, function( index, value ) {
-                $('a[href="#' + value + '"]').closest('li').remove();    
-            });
+    function gotFileWriter(writer) {
+        writer.onwriteend = function(evt) {
+            console.log("contents of file now 'some sample text'");
+            writer.truncate(11);  
+            writer.onwriteend = function(evt) {
+                console.log("contents of file now 'some sample'");
+                writer.seek(4);
+                writer.write(" different text");
+                writer.onwriteend = function(evt){
+                    console.log("contents of file now 'some different text'");
+                }
+            };
         };
-
-        reader.readAsText(file);
+        writer.write("some sample text");
     }
 
-    function fail(evt) {
-        alert(evt.target.error.code);
+    function fail(error) {
+        console.log(error.code);
     }
+
 </script>
 </body>
 </html>
