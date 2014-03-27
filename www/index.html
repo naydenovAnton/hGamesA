@@ -62,7 +62,6 @@
 
     function onDeviceReady() {
 
-        alert('1');
         window.resolveLocalFileSystemURI("file:///sdcard/readme.txt", onResolveSuccess, fail);
 
         $('#addText').unbind('click').click(function () {
@@ -71,12 +70,10 @@
     }
 
     function onResolveSuccess(fileEntry) {
-        alert('2'); 
         fileEntry.file(gotFile, fail);
     }
 
     function gotFile(file) {
-        alert('3');
         readAsText(file);
     }
 
@@ -103,6 +100,8 @@
                 count++;
             });
         };
+
+        reader.readAsText(file);
     };
 
     function gotFileEntry(fileEntry) {
