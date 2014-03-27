@@ -60,48 +60,9 @@
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
-    /*
-
-     function onDeviceReady() {
-     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
-     window.resolveLocalFileSystemURI("file:///sdcard/readme.txt", onResolveSuccess, fail);
-     }
-
-     function onFileSystemSuccess(fileSystem) {
-     }
-
-     function onResolveSuccess(fileEntry) {
-     fileEntry.file(gotFile, fail);
-     }
-
-     function gotFile(file){
-     readAsText(file);
-     }
-
-     function readAsText(file) {
-     var reader = new FileReader();
-     reader.onloadend = function(evt) {
-     var str = evt.target.result;
-     var res = str.split("::");
-
-     var count = 0;
-     $.each(res, function( index, value ) {
-
-     if(count == 0) {
-     $('#frontText').html(value);
-     }
-
-     $('a[href="#' + value + '"]').closest('li').remove();
-     count++;
-     });
-     };
-
-     reader.readAsText(file);
-     }
-     */
-
     function onDeviceReady() {
 
+        alert('1');
         window.resolveLocalFileSystemURI("file:///sdcard/readme.txt", onResolveSuccess, fail);
 
         $('#addText').unbind('click').click(function () {
@@ -110,22 +71,25 @@
     }
 
     function onResolveSuccess(fileEntry) {
+        alert('2');
         fileEntry.file(gotFile, fail);
     }
 
     function gotFile(file) {
+        alert('3');
         readAsText(file);
     }
 
     function readAsText(file) {
+        alert('4');
         var reader = new FileReader();
         reader.onloadend = function (evt) {
 
             var str = evt.target.result;
 
-            alert(str);
+            alert('5');
             return false;
-            
+
             var res = str.split("::");
 
             var count = 0;
