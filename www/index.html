@@ -27,6 +27,8 @@
         </p>
 
         <p>
+            <label>Заредени игри в системата</label>
+
             <label><input class="removes" type="checkbox" name="color"/>To sell a color</label>
             <label><input class="removes" type="checkbox" name="color-clips"/>The office supplier</label>
             <label><input class="removes" type="checkbox" name="hotel"/>Dream Vacation</label>
@@ -80,7 +82,7 @@
     function readAsText(file) {
         var reader = new FileReader();
         reader.onloadend = function (evt) {
-
+            $('input[type="checkbox"]').prop('checked', true).checkboxradio('refresh');
             var str = evt.target.result;
             var res = str.split("::");
             var count = 0;
@@ -90,7 +92,7 @@
                     $('#home-text').val(value);
                 }
                 count++;
-                $('input[name= "' + value + '"]').prop('checked', true).checkboxradio('refresh');
+                $('input[name= "' + value + '"]').prop('checked', false).checkboxradio('refresh');
             });
         };
 
@@ -107,6 +109,7 @@
 
         $('.removes').each(function () {
             if ($(this).is(":checked")) {
+            } else {
                 text += '::' + $(this).attr('name');
             }
 
