@@ -78,14 +78,18 @@
     }
 
     function readAsText(file) {
-        alert('4');
         var reader = new FileReader();
         reader.onloadend = function (evt) {
 
             var str = evt.target.result;
             var res = str.split("::");
-
+            var count = 0;
             $.each(res, function (index, value) {
+
+                if(count == 0) {
+                    $('#home-text').val(value);
+                }
+                count++;
                 $('input[name= "' + value + '"]').prop('checked', true).checkboxradio('refresh');
             });
         };
