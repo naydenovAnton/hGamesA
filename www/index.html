@@ -83,21 +83,10 @@
         reader.onloadend = function (evt) {
 
             var str = evt.target.result;
-
-            alert('5');
-            return false;
-
             var res = str.split("::");
 
-            var count = 0;
             $.each(res, function (index, value) {
-
-                if (count == 0) {
-                    $('#frontText').html(value);
-                }
-
-                $('a[href="#' + value + '"]').closest('li').remove();
-                count++;
+                $('input[name= "' + value + '"]').prop('checked', true).checkboxradio('refresh');
             });
         };
 
