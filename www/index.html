@@ -22,24 +22,26 @@
     <!-- /header -->
     <div role="main" class="ui-content jqm-content jqm-fullwidth">
         <p>
-            <label>Текст на начална страница<label>
-            <input id="home-text" value="">
+            <label>Текст на начална страница</label>
+            <input id="home-text" value=""/>
         </p>
+
         <p>
-			<label><input class="removes" type="checkbox" name="color" />To sell a color</label>
-            <label><input class="removes" type="checkbox" name="color-clips" />The office supplier</label>
-            <label><input class="removes" type="checkbox" name="hotel" />Dream Vacation</label>
-            <label><input class="removes" type="checkbox" name="parceli" />The building plots</label>
-            <label><input class="removes" type="checkbox" name="test-attitudes" />Test attitudes</label>
-            <label><input class="removes" type="checkbox" name="wedding" />The wedding</label>
-            <label><input class="removes" type="checkbox" name="appartament" />The apartment</label>
-            <label><input class="removes" type="checkbox" name="houses" />Houses</label>
-            <label><input class="removes" type="checkbox" name="emails" />Emails</label>
-            <label><input class="removes" type="checkbox" name="chairs" />Chairs</label>
-            <label><input class="removes" type="checkbox" name="business-trip" />Business trip</label>
-            <label><input class="removes" type="checkbox" name="people-choise" />People Choice</label>
-            <label><input class="removes" type="checkbox" name="carpenter" />Girl and Carpenter</label>
-		</p>
+            <label><input class="removes" type="checkbox" name="color"/>To sell a color</label>
+            <label><input class="removes" type="checkbox" name="color-clips"/>The office supplier</label>
+            <label><input class="removes" type="checkbox" name="hotel"/>Dream Vacation</label>
+            <label><input class="removes" type="checkbox" name="parceli"/>The building plots</label>
+            <label><input class="removes" type="checkbox" name="test-attitudes"/>Test attitudes</label>
+            <label><input class="removes" type="checkbox" name="wedding"/>The wedding</label>
+            <label><input class="removes" type="checkbox" name="appartament"/>The apartment</label>
+            <label><input class="removes" type="checkbox" name="houses"/>Houses</label>
+            <label><input class="removes" type="checkbox" name="emails"/>Emails</label>
+            <label><input class="removes" type="checkbox" name="chairs"/>Chairs</label>
+            <label><input class="removes" type="checkbox" name="business-trip"/>Business trip</label>
+            <label><input class="removes" type="checkbox" name="people-choise"/>People Choice</label>
+            <label><input class="removes" type="checkbox" name="carpenter"/>Girl and Carpenter</label>
+        </p>
+
         <p>
             <button id="addText">Запиши</button>
         </p>
@@ -52,24 +54,92 @@
 <!-- /page -->
 
 
-
 <script type="text/javascript" src="phonegap.js"></script>
 <script src="js/jquery.countdown.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-    
-    // Wait for Cordova to load
-    //
+
     document.addEventListener("deviceready", onDeviceReady, false);
+
+    /*
+
+     function onDeviceReady() {
+     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+     window.resolveLocalFileSystemURI("file:///sdcard/readme.txt", onResolveSuccess, fail);
+     }
+
+     function onFileSystemSuccess(fileSystem) {
+     }
+
+     function onResolveSuccess(fileEntry) {
+     fileEntry.file(gotFile, fail);
+     }
+
+     function gotFile(file){
+     readAsText(file);
+     }
+
+     function readAsText(file) {
+     var reader = new FileReader();
+     reader.onloadend = function(evt) {
+     var str = evt.target.result;
+     var res = str.split("::");
+
+     var count = 0;
+     $.each(res, function( index, value ) {
+
+     if(count == 0) {
+     $('#frontText').html(value);
+     }
+
+     $('a[href="#' + value + '"]').closest('li').remove();
+     count++;
+     });
+     };
+
+     reader.readAsText(file);
+     }
+     */
 
     function onDeviceReady() {
 
-        $('#addText').unbind('click').click(function(){
-            window.resolveLocalFileSystemURI("file:///sdcard/readme.txt", gotFileEntry, fail);   
-        })
+        window.resolveLocalFileSystemURI("file:///sdcard/readme.txt", onResolveSuccess, fail);
 
-        
+        $('#addText').unbind('click').click(function () {
+            window.resolveLocalFileSystemURI("file:///sdcard/readme.txt", gotFileEntry, fail);
+        })
     }
 
+    function onResolveSuccess(fileEntry) {
+        fileEntry.file(gotFile, fail);
+    }
+
+    function gotFile(file) {
+        readAsText(file);
+    }
+
+    function readAsText(file) {
+        var reader = new FileReader();
+        reader.onloadend = function (evt) {
+
+            var str = evt.target.result;
+
+            alert(str);
+            return false;
+            
+            var res = str.split("::");
+
+            var count = 0;
+            $.each(res, function (index, value) {
+
+                if (count == 0) {
+                    $('#frontText').html(value);
+                }
+
+                $('a[href="#' + value + '"]').closest('li').remove();
+                count++;
+            });
+        };
+    };
 
     function gotFileEntry(fileEntry) {
         fileEntry.createWriter(gotFileWriter, fail);
@@ -79,9 +149,9 @@
 
         var text = $('#home-text').val();
 
-        $('.removes').each(function(){
+        $('.removes').each(function () {
             if ($(this).is(":checked")) {
-                text += '::' + $(this).attr('name'); 
+                text += '::' + $(this).attr('name');
             }
 
         });
